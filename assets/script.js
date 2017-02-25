@@ -1,41 +1,93 @@
-var Suzaku = {
-        // Suzaku's stats
-        "HP" : 100,
-        "attack" : 8,
-        "counter-attack": 12,
+$(document).ready(function(){ 
 
-        // Suzaku damage alert
-        suzakuHurt : function () {
-          this.HP = this.HP - x;
-          alert("Suzaku takes " x "dmg, he now has " + this.HP + " HP left!");
-        },
+  // Audio script
+  var audio, playbtn, seek_bar, audio2;
+  function initAudioPlayer() {
+    audio = new Audio();
+    audio.src = "assets/audio/ffxiv_boss_theme.mp3";
+    audio.loop = true;
+    audio.play();
 
-        // Suzaku defeat alert
-        suzakuDead : function() {
-          this.HP = this.HP * 0;
-          alert("Suzaku's HP has reached " + this.HP + "!");
-          alert("You've killed Suzaku");
-        }
+    audio2 = new Audio();
+    audio2.src = "assets/audio/victory.mp3";
 
-      };
+    // Object references
+    playbtn = document.getElementById("playpausebtn");
+    mutebtn = document.getElementById("mutebtn");
+    // Add Event Handler
+    playbtn.addEventListener("click", playPause);
+    mutebtn.addEventListener("click", mute);
+    // Functions
+    function playPause() {
+      if (audio.paused) {
+        audio.play();
+        playbtn.style.background = "url('assets/images/pause_button.png') no-repeat";
+      }
+      else {
+        audio.pause();
+        playbtn.style.background = "url('assets/images/play_button.png') no-repeat";
+      }
+    }
 
-var Byakko = {
-        // Byakko's stats
-        "HP" : 135,
-        "attack" : 12,
-        "counter-attack": 16,
+    function mute() {
+      if (audio.muted) {
+        audio.muted = false;
+        mutebtn.style.background = "url('assets/images/mute_button.png') no-repeat";
+      }
+      else {
+        audio.muted = true;
+        mutebtn.style.background = "url('assets/images/unmute_button.png') no-repeat";  
+      }
+    }
+  }
+    // end audio script
 
-        // Byakko damage alert
-        byakkoHurt : function () {
-          this.HP = this.HP - ;
-          alert("Illidan takes 100dmg, he now has " + this.HP + " HP left!");
-        },
+// Card images
+var genbuGod = $('.turtle').prepend($('<img>',{class:'genbu',src:'assets/images/genbu.png',
+    hp: 80,
+    attack: 8,
+    cAttack: 12,
+  }));
+var suzakuGod = $('.bird').prepend($('<img>',{class:'suzaku',src:'assets/images/suzaku.png', 
+    hp: 100,
+    attack: 12,
+    cAttack: 10,
+  }));
+var byakkoGod = $('.tiger').prepend($('<img>',{class:'byakko',src:'assets/images/byakko.png'}));
+var seiryuGod = $('.dragon').prepend($('<img>',{class:'seiryu',src:'assets/images/seiryu.png'}));
 
-        // Byakko defeat alert
-        byakkoDead : function() {
-          this.HP = this.HP * 0;
-          alert("Byakko's HP has reached " + this.HP + "!");
-          alert("You've killed Byakko!");
-        }
+// Battlefield images
+$('#player').prepend($('<img>',{id:'you',src:'assets/images/main_card.png'}));
+$('#enemy').prepend($('<img>',{id:'opponent',src:'assets/images/main_card.png'}));
 
-      };
+var player = $('#player');
+var enemy = $('#enemy');
+
+var booleanPlayer = false;
+
+$('.card img').click(function() {
+    var selection = $(this).attr("src");
+    if (player.attr("src", selection) === "" || !booleanPlayer) {
+      $('#player img').attr("src",selection);
+    }
+    else {
+      $('#enemy img').attr("src",selection);
+    }
+
+});
+  
+  // $(".card").on("click", function() {
+  //   var selection = this.document;
+  //   console.log(selection);
+  //   if (player.attr("src", selection) === "" || !booleanPlayer ) {
+  //       player.attr("src", selection);
+  //       console.log(selection);
+  //   }
+  //   else {
+  //       enemy.attr("src",selection);
+  //   }
+
+  // }); 
+
+
+});
