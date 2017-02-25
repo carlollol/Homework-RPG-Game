@@ -43,17 +43,28 @@ $(document).ready(function(){
     // end audio script
 
 // Card images
-var genbuGod = $('.turtle').prepend($('<img>',{class:'genbu',src:'assets/images/genbu.png',
-    hp: 80,
-    attack: 8,
-    cAttack: 12,
+var genbuGod = {
+
+  hp: 100,
+  attack: 8,
+  cAttack: 12,
+  stat1: function() {
+  var genbuImg = $('.turtle').prepend($('<img>',{class:'genbu',src:'assets/images/genbu.png'
   }));
+  }
+};
+
+genbuGod.stat1();
+
+
 var suzakuGod = $('.bird').prepend($('<img>',{class:'suzaku',src:'assets/images/suzaku.png', 
     hp: 100,
     attack: 12,
     cAttack: 10,
   }));
+
 var byakkoGod = $('.tiger').prepend($('<img>',{class:'byakko',src:'assets/images/byakko.png'}));
+
 var seiryuGod = $('.dragon').prepend($('<img>',{class:'seiryu',src:'assets/images/seiryu.png'}));
 
 // Battlefield images
@@ -65,16 +76,21 @@ var enemy = $('#enemy');
 
 var booleanPlayer = false;
 
+
 $('.card img').click(function() {
     var selection = $(this).attr("src");
-    if (player.attr("src", selection) === "" || !booleanPlayer) {
+    if (!booleanPlayer) {
       $('#player img').attr("src",selection);
+      booleanPlayer = true;
     }
     else {
       $('#enemy img').attr("src",selection);
+      booleanPlayer = true;
     }
 
 });
+
+
   
   // $(".card").on("click", function() {
   //   var selection = this.document;

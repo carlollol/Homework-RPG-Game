@@ -36,10 +36,17 @@ ul li img {
 	box-shadow: 0 .5px 5px .5px #888888;
 }
 
-ul li img:hover {
+.card:hover {
 		opacity: 0.5; 
 		filter: alpha(opacity=50);
 	}
+
+.card:active {
+		opacity: 0.5; 
+		filter: alpha(opacity=50);
+		cursor: default;
+	}
+
 button {
 	width: 100%;
 }
