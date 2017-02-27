@@ -1,5 +1,6 @@
 $(document).ready(function(){ 
 
+  console.log('this is the right file');
   // Audio script
   var audio, playbtn, seek_bar, audio2;
   function initAudioPlayer() {
@@ -42,30 +43,49 @@ $(document).ready(function(){
   }
     // end audio script
 
-// Card images
-var genbuGod = {
 
-  hp: 100,
-  attack: 8,
-  cAttack: 12,
-  stat1: function() {
-  var genbuImg = $('.turtle').prepend($('<img>',{class:'genbu',src:'assets/images/genbu.png'
-  }));
+// Card images
+var chars = {
+  "genbu": {
+    name: 'Genbu',
+    hp: 100,
+    attack: 16,
+    cAttack: 12,
+    stat1: function() {
+    var genbuImg = $('.turtle').prepend($('<img>',{class:'genbu',src:'assets/images/genbu.png'}));}
+  },
+  "suzaku":{
+    name: 'Suzaku',
+    hp: 120,
+    attack: 12,
+    cAttack: 16,
+    stat2: function() {
+    var suzakuImg = $('.bird').prepend($('<img>',{class:'suzaku',src:'assets/images/suzaku.png'}));}
+  },
+  "byakko":{
+    name: 'Byakko',
+    hp: 140,
+    attack: 14,
+    cAttack: 14,
+    stat3: function() {
+    var byakkoImg = $('.tiger').prepend($('<img>',{class:'byakko',src:'assets/images/byakko.png'}));}
+  },
+  "seiryu": {
+    name: 'Seiryu',
+    hp: 160,
+    attack: 16,
+    cAttack: 16,
+    stat4: function() {
+    var seiryuImg = $('.dragon').prepend($('<img>',{class:'seiryu',src:'assets/images/seiryu.png'}));}
   }
+
 };
 
-genbuGod.stat1();
+chars["genbu"].stat1();
+chars["suzaku"].stat2();
+chars["byakko"].stat3();
+chars["seiryu"].stat4();
 
-
-var suzakuGod = $('.bird').prepend($('<img>',{class:'suzaku',src:'assets/images/suzaku.png', 
-    hp: 100,
-    attack: 12,
-    cAttack: 10,
-  }));
-
-var byakkoGod = $('.tiger').prepend($('<img>',{class:'byakko',src:'assets/images/byakko.png'}));
-
-var seiryuGod = $('.dragon').prepend($('<img>',{class:'seiryu',src:'assets/images/seiryu.png'}));
 
 // Battlefield images
 $('#player').prepend($('<img>',{id:'you',src:'assets/images/main_card.png'}));
@@ -74,22 +94,41 @@ $('#enemy').prepend($('<img>',{id:'opponent',src:'assets/images/main_card.png'})
 var player = $('#player');
 var enemy = $('#enemy');
 
+var currentPlayer = null;
+var currentEnemy = null;
+
 var booleanPlayer = false;
 
 
-$('.card img').click(function() {
+
+// character selection
+$(document).on('click', '.card img', function() {
     var selection = $(this).attr("src");
     if (!booleanPlayer) {
+      currentPlayer = this.classList[0];
       $('#player img').attr("src",selection);
       booleanPlayer = true;
+      player = this;
     }
     else {
+      currentEnemy = this.classList[0];
       $('#enemy img').attr("src",selection);
-      booleanPlayer = true;
+      $(document).off('click', '.card img');
+      $('#attackBtn').prop('disabled', false);
     }
 
 });
 
+// battle phase
+$(document).on('click', '#attackBtn', function() {
+  chars[currentEnemy].hp = chars[currentEnemy].hp - chars[currentPlayer].attack;
+  chars[currentPlayer].hp = chars[currentPlayer].hp - chars[currentEnemy].cAttack;
+  console.log(chars[currentEnemy].hp);
+  console.log(chars[currentPlayer].hp);
+  // if chars[currentEnemy].hp = 0 {
+  // //   alert(chars[currentEnemy].name + "has been defeated");
+  // }
+});
 
   
   // $(".card").on("click", function() {

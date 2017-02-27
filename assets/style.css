@@ -23,6 +23,7 @@ h1 {
 
 ul li {
 	list-style: none;
+	cursor: pointer;
 }
 
 ul li img {
@@ -34,17 +35,18 @@ ul li img {
 	border: 3px solid #fff;
 	border-radius: 5px;
 	box-shadow: 0 .5px 5px .5px #888888;
+	cursor: pointer;
 }
 
 .card:hover {
 		opacity: 0.5; 
 		filter: alpha(opacity=50);
+		cursor: pointer;
 	}
 
 .card:active {
 		opacity: 0.5; 
 		filter: alpha(opacity=50);
-		cursor: default;
 	}
 
 button {
