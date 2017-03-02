@@ -53,6 +53,18 @@ button {
 	width: 100%;
 }
 
+#playerHP {
+	margin-top: 10px;
+	border-radius: 5px;
+	background: #f36f21;
+}
+
+#enemyHP {
+	margin-top: 10px;
+	border-radius: 5px;
+	background: #f36f21;
+}
+
 #player img {
 	width: 100%;
 	height: auto;

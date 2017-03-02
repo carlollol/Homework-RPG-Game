@@ -1,6 +1,5 @@
 $(document).ready(function(){ 
 
-  console.log('this is the right file');
   // Audio script
   var audio, playbtn, seek_bar, audio2;
   function initAudioPlayer() {
@@ -44,37 +43,38 @@ $(document).ready(function(){
     // end audio script
 
 
-// Card images
+// Card images & stats
+
 var chars = {
   "genbu": {
     name: 'Genbu',
     hp: 100,
-    attack: 16,
-    cAttack: 12,
+    attack: 8,
+    cAttack: 10,
     stat1: function() {
     var genbuImg = $('.turtle').prepend($('<img>',{class:'genbu',src:'assets/images/genbu.png'}));}
   },
   "suzaku":{
     name: 'Suzaku',
-    hp: 120,
-    attack: 12,
-    cAttack: 16,
+    hp: 100,
+    attack: 8,
+    cAttack: 5,
     stat2: function() {
     var suzakuImg = $('.bird').prepend($('<img>',{class:'suzaku',src:'assets/images/suzaku.png'}));}
   },
   "byakko":{
     name: 'Byakko',
-    hp: 140,
-    attack: 14,
-    cAttack: 14,
+    hp: 100,
+    attack: 8,
+    cAttack: 20,
     stat3: function() {
     var byakkoImg = $('.tiger').prepend($('<img>',{class:'byakko',src:'assets/images/byakko.png'}));}
   },
   "seiryu": {
     name: 'Seiryu',
-    hp: 160,
-    attack: 16,
-    cAttack: 16,
+    hp: 100,
+    attack: 8,
+    cAttack: 25,
     stat4: function() {
     var seiryuImg = $('.dragon').prepend($('<img>',{class:'seiryu',src:'assets/images/seiryu.png'}));}
   }
@@ -86,20 +86,26 @@ chars["suzaku"].stat2();
 chars["byakko"].stat3();
 chars["seiryu"].stat4();
 
-
 // Battlefield images
 $('#player').prepend($('<img>',{id:'you',src:'assets/images/main_card.png'}));
 $('#enemy').prepend($('<img>',{id:'opponent',src:'assets/images/main_card.png'}));
 
+// Selection HP Bars
+$('#player').append($('<div>',{id: 'playerHP'}));
+$('#enemy').append($('<div>', {id: 'enemyHP'}));
+
 var player = $('#player');
 var enemy = $('#enemy');
+
+var pHP = null;
+var currPHP
+var eHP = null;
+var currEHP;
 
 var currentPlayer = null;
 var currentEnemy = null;
 
 var booleanPlayer = false;
-
-
 
 // character selection
 $(document).on('click', '.card img', function() {
@@ -107,24 +113,50 @@ $(document).on('click', '.card img', function() {
     if (!booleanPlayer) {
       currentPlayer = this.classList[0];
       $('#player img').attr("src",selection);
+      $("#player").addClass(currentPlayer);
+      $('#playerHP').css({'width': "100%", 'height': '15', 'max-width': '100%'});
+
+      console.log(this.classList);
       booleanPlayer = true;
-      player = this;
     }
     else {
       currentEnemy = this.classList[0];
       $('#enemy img').attr("src",selection);
+      $("#enemy").addClass(currentEnemy);
+      $('#enemyHP').css({'width': "100%", 'height': '15', 'max-width': '100%'});
+      console.log(this.classList);
       $(document).off('click', '.card img');
       $('#attackBtn').prop('disabled', false);
     }
 
 });
 
+
+
 // battle phase
 $(document).on('click', '#attackBtn', function() {
-  chars[currentEnemy].hp = chars[currentEnemy].hp - chars[currentPlayer].attack;
-  chars[currentPlayer].hp = chars[currentPlayer].hp - chars[currentEnemy].cAttack;
-  console.log(chars[currentEnemy].hp);
-  console.log(chars[currentPlayer].hp);
+//   var newHealth = $('#playerHP').css({'width': (chars[currentPlayer].hp - chars[currentEnemy].attack / chars[currentPlayer].hp * 100)});
+  chars[currentEnemy].hp = chars[currentEnemy].hp - chars[currentPlayer].attack / chars[currentEnemy].hp * 100;
+  eHP = chars[currentEnemy].hp - chars[currentPlayer].attack / chars[currentEnemy].hp * 100;
+  currEHP = eHP + "%";
+  console.log(currEHP);
+  $('#enemyHP').css({'width': currEHP});
+
+  chars[currentPlayer].hp = chars[currentPlayer].hp - chars[currentEnemy].cAttack / chars[currentPlayer].hp * 100;
+  pHP = chars[currentPlayer].hp - chars[currentEnemy].cAttack / chars[currentPlayer].hp * 100;
+  currPHP = pHP + "%";
+  console.log(currPHP);
+
+  
+  $('#playerHP').css({'width': currPHP});
+
+  // chars[currentPlayer].hp = chars[currentPlayer].hp - chars[currentEnemy].cAttack;
+
+
+  // parseInt(newHealth);
+  // console.log(parseInt(newHealth));
+  // console.log(chars[currentPlayer].hp);
+  // console.log(chars[currentEnemy].hp);
   // if chars[currentEnemy].hp = 0 {
   // //   alert(chars[currentEnemy].name + "has been defeated");
   // }
